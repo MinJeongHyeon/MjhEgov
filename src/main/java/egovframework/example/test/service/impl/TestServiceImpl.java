@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
  
 import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.TestService;
+import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
+import egovframework.example.test.vo.UserVo;
  
 @Service
 public class TestServiceImpl implements TestService{
@@ -16,8 +18,17 @@ public class TestServiceImpl implements TestService{
     private TestDao testDao;
     
     @Override
-    public List<TestVo> selectTest(TestVo testVo) throws Exception {
-        return testDao.selectTest(testVo);
+    public void register(UserVo userVo) throws Exception {
+    	testDao.register(userVo);
+    }
+    
+    @Override
+    public List<TestVo> selectTest(Search search) throws Exception {
+    	if (search.getKeyword() != null && !search.getKeyword().equals("")) {
+    	String[] words = search.getKeyword().trim().split("\\s+");
+    	search.setWords(words);
+    	}
+        return testDao.selectTest(search);
     }
     
     @Override
@@ -40,4 +51,13 @@ public class TestServiceImpl implements TestService{
         testDao.deleteTest(bbsID);
     }
  
+    @Override
+    public int getBoardListCnt(Search search) throws Exception {
+    	if (search.getKeyword() != null && !search.getKeyword().equals("")) {
+        	String[] words = search.getKeyword().trim().split("\\s+");
+        	search.setWords(words);
+        	}
+        return testDao.getBoardListCnt(search);
+    }
+
 }

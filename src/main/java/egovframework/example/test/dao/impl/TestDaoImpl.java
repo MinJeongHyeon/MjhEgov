@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.TestMapper;
 import egovframework.example.test.vo.TestVo;
+import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.Search;
  
 @Repository
 public class TestDaoImpl implements TestDao {
@@ -17,9 +19,15 @@ public class TestDaoImpl implements TestDao {
     private SqlSession sqlSession;
     
     @Override
-    public List<TestVo> selectTest(TestVo testVo) throws Exception {
+    public void register(UserVo userVo) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.register(userVo);
+    }
+    
+    @Override
+    public List<TestVo> selectTest(Search search) throws Exception {
         TestMapper mapper = sqlSession.getMapper(TestMapper.class);
-        return mapper.selectTest(testVo);
+        return mapper.selectTest(search);
     }
     
     @Override
@@ -45,5 +53,10 @@ public class TestDaoImpl implements TestDao {
         TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.deleteTest(bbsID);
     }
- 
+    @Override
+    public int getBoardListCnt(Search search) throws Exception {
+        TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.getBoardListCnt(search);
+    }
+                                       
 }
