@@ -19,6 +19,12 @@ public class TestDaoImpl implements TestDao {
     private SqlSession sqlSession;
     
     @Override
+	public int checkID(UserVo userVo) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.checkID(userVo);
+    }
+	
+    @Override
     public void register(UserVo userVo) throws Exception {
     	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.register(userVo);

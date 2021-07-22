@@ -7,6 +7,8 @@ import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
  
 public interface TestService {
+	
+	public int checkID(UserVo userVo) throws Exception;
  
 	public void register(UserVo userVo) throws Exception;
 	

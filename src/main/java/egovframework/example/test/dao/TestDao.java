@@ -8,6 +8,8 @@ import egovframework.example.test.vo.Search;
  
 public interface TestDao {
 	
+	public int checkID(UserVo userVo) throws Exception;
+	
 	public void register(UserVo userVo) throws Exception;
  
     public List<TestVo> selectTest(Search Search) throws Exception;

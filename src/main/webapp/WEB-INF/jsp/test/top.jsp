@@ -29,8 +29,8 @@
 					aria-expanded="false">마이페이지
 					<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
+						<li><a href="login.do">로그인</a></li>
+						<li><a href="join.do">회원가입</a></li>
 						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul>
 				</li>

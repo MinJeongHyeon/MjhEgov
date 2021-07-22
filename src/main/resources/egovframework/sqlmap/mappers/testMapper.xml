@@ -62,5 +62,16 @@
         BBSAVAILABLE = 0 
         WHERE BBSID = #{bbsID}
     </update>
+    
+    <!-- 회원 가입 -->
+    <insert id="register" parameterType="egovframework.example.test.vo.UserVo">
+        INSERT INTO USERS(USERID, USERPASSWORD, USERNAME, USERGENDER, USEREMAIL) 
+        VALUES (#{userID}, #{userPassword}, #{userName}, #{userGender}, #{userEmail})
+    </insert>
+    
+    <select id="checkID" resultType="int">
+    	SELECT COUNT(*) FROM USERS
+    	WHERE USERID = #{userID}
+    </select>
 </mapper>
 

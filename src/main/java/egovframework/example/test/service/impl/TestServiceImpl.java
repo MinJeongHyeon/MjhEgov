@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
  
 import egovframework.example.test.dao.TestDao;
+import egovframework.example.test.service.SHA256;
 import egovframework.example.test.service.TestService;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
@@ -18,7 +19,14 @@ public class TestServiceImpl implements TestService{
     private TestDao testDao;
     
     @Override
+    public int checkID(UserVo userVo) throws Exception {
+    	return testDao.checkID(userVo);
+    }
+    
+    @Override
     public void register(UserVo userVo) throws Exception {
+    	SHA256 sha256 = new SHA256();
+		userVo.setUserPassword(sha256.encrypt(userVo.getUserPassword()));
     	testDao.register(userVo);
     }
     

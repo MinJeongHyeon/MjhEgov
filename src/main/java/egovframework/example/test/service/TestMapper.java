@@ -10,18 +10,20 @@ import egovframework.example.test.vo.UserVo;
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
 
-   public void register(UserVo userVo) throws Exception;
-	
-   List<TestVo> selectTest(Search search) throws Exception;
+	public int checkID(UserVo userVo) throws Exception;
 
-   public void insertTest(TestVo testVo) throws Exception;
-   
-   public TestVo selectDetail(int testId) throws Exception;
+	public void register(UserVo userVo) throws Exception;
 
-   public void updateTest(TestVo testVo) throws Exception;
+	List<TestVo> selectTest(Search search) throws Exception;
 
-   public void deleteTest(int testId) throws Exception;
+	public void insertTest(TestVo testVo) throws Exception;
 
-   public int getBoardListCnt(Search search) throws Exception;
+	public TestVo selectDetail(int testId) throws Exception;
+
+	public void updateTest(TestVo testVo) throws Exception;
+
+	public void deleteTest(int testId) throws Exception;
+
+	public int getBoardListCnt(Search search) throws Exception;
 
 }

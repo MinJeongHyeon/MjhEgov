@@ -11,9 +11,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Spring 게시판 웹 사이트</title>
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="../../../css/bootstrap.css">
-<link rel="stylesheet" href="../../../css/custom.css">
-<link rel="stylesheet" href="../../../css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 <link
 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
 	rel="stylesheet">
