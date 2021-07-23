@@ -1,6 +1,7 @@
 package egovframework.example.test.controller;
  
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.service.TestService;
 import egovframework.example.test.vo.Search;
@@ -21,6 +23,12 @@ public class TestController {
     
     @Autowired
     private TestService testService;
+    
+    // 메인 페이지
+    @RequestMapping(value="/main.do")
+    public String main(){
+        return "test/main";
+    }
     
     // 아이디 중복 체크
     @ResponseBody
@@ -36,6 +44,33 @@ public class TestController {
         return "test/login";
     }
     
+    // 로그인 하기
+    @RequestMapping(value = "/signIn.do", method = RequestMethod.POST)
+	public String signIn(UserVo userVo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
+    	
+		HttpSession session = req.getSession();
+		UserVo signIn = testService.signIn(userVo);
+		
+		if(signIn == null) {
+			session.setAttribute("user", null);
+			rttr.addFlashAttribute("msg", false);
+			return "redirect:login.do";
+		}else {
+			session.setAttribute("user", signIn);
+		}
+		
+		return "redirect:main.do";
+	}
+    
+    // 로그아웃
+    @RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception{
+		
+		session.invalidate();
+	
+		return "redirect:main.do";
+	}
+    
     // 회원가입 페이지
     @RequestMapping(value="/join.do")
     public String join(){
@@ -47,10 +82,10 @@ public class TestController {
     public String register(@ModelAttribute("userVo") UserVo userVo) throws Exception {
         int checkedID = testService.checkID(userVo);
         try {
-        	if(checkedID == 1) return "test/join";
+        	if(checkedID == 1) return "join.do";
         	if(checkedID == 0) testService.register(userVo);
         } catch (Exception e) {throw new RuntimeException();}
-        return "redirect:testList.do";
+        return "redirect:main.do";
     }
 
     

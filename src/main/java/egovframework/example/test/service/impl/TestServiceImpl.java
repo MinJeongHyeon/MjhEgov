@@ -2,9 +2,12 @@ package egovframework.example.test.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.SHA256;
 import egovframework.example.test.service.TestService;
@@ -18,6 +21,12 @@ public class TestServiceImpl implements TestService{
     @Autowired
     private TestDao testDao;
     
+    @Override
+    public UserVo signIn(UserVo userVo) throws Exception {
+    	SHA256 sha256 = new SHA256();
+		userVo.setUserPassword(sha256.encrypt(userVo.getUserPassword()));
+    	return testDao.signIn(userVo);
+    }
     @Override
     public int checkID(UserVo userVo) throws Exception {
     	return testDao.checkID(userVo);

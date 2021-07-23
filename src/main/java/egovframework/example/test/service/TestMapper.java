@@ -2,6 +2,10 @@ package egovframework.example.test.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
@@ -10,6 +14,8 @@ import egovframework.example.test.vo.UserVo;
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
 
+	public UserVo signIn(UserVo userVo) throws Exception;
+	
 	public int checkID(UserVo userVo) throws Exception;
 
 	public void register(UserVo userVo) throws Exception;

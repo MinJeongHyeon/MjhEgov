@@ -2,11 +2,17 @@ package egovframework.example.test.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
 import egovframework.example.test.vo.Search;
  
 public interface TestDao {
+	
+	public UserVo signIn(UserVo userVo) throws Exception;
 	
 	public int checkID(UserVo userVo) throws Exception;
 	
