@@ -1,22 +1,29 @@
 package egovframework.example.test.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.SHA256;
 import egovframework.example.test.service.TestService;
+import egovframework.example.test.util.FileUtils;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
  
 @Service
 public class TestServiceImpl implements TestService{
+	
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
  
     @Autowired
     private TestDao testDao;
@@ -49,8 +56,14 @@ public class TestServiceImpl implements TestService{
     }
     
     @Override
-    public void insertTest(TestVo testVo) throws Exception {
+    public void insertTest(TestVo testVo, MultipartHttpServletRequest mpRequest) throws Exception {
         testDao.insertTest(testVo);
+        
+        List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(testVo, mpRequest); 
+		int size = list.size();
+		for(int i=0; i<size; i++){ 
+			testDao.insertFile(list.get(i)); 
+		}
     }
  
     @Override

@@ -1,6 +1,7 @@
 package egovframework.example.test.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,5 +31,6 @@ public interface TestDao {
     
     public int getBoardListCnt(Search search) throws Exception;
     
+    public void insertFile(Map<String, Object> map) throws Exception;
 
 }

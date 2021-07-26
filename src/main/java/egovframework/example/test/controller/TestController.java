@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.service.TestService;
@@ -32,10 +33,10 @@ public class TestController {
     
     // 아이디 중복 체크
     @ResponseBody
-    @RequestMapping(value="/checkID", method = RequestMethod.POST)
-    public int checkID(UserVo userVo) throws Exception {
+    @RequestMapping(value="/checkID.do", produces="text/json; charset=utf-8", method = RequestMethod.POST)
+    public String checkID(UserVo userVo) throws Exception {
     	int result = testService.checkID(userVo);
-    	return result;
+    	return Integer.toString(result);
     }
     
     // 로그인 페이지
@@ -80,11 +81,7 @@ public class TestController {
     // 회원가입 하기
     @RequestMapping(value="/register.do")
     public String register(@ModelAttribute("userVo") UserVo userVo) throws Exception {
-        int checkedID = testService.checkID(userVo);
-        try {
-        	if(checkedID == 1) return "join.do";
-        	if(checkedID == 0) testService.register(userVo);
-        } catch (Exception e) {throw new RuntimeException();}
+        testService.register(userVo);
         return "redirect:main.do";
     }
 
@@ -116,8 +113,9 @@ public class TestController {
     }
 
     // 게시글 읽기
-    @RequestMapping(value="testDetail.do")
+    @RequestMapping(value="/testDetail.do")
     public String viewForm(Model model, HttpServletRequest request) throws Exception{
+    	
         int bbsID = Integer.parseInt(request.getParameter("bbsID"));
         
         TestVo testVo = testService.selectDetail(bbsID);
@@ -134,10 +132,21 @@ public class TestController {
     
     // 게시글 작성 완료
     @RequestMapping(value="/insertTest.do")
-    public String write(@ModelAttribute("testVo") TestVo testVo) throws Exception {
-        testService.insertTest(testVo);
-        return "redirect:testList.do";
+    public String write(@ModelAttribute("testVo") TestVo testVo, MultipartHttpServletRequest mpRequest) throws Exception {
+        testService.insertTest(testVo, mpRequest);
+        return "redirect:testDetail.do?bbsID="+testVo.getBbsID();
     }
+    
+    // 게시글 수정 페이지
+    @RequestMapping(value = "/update.do")
+	public String update(Model model, HttpServletRequest request) throws Exception{
+    	int bbsID = Integer.parseInt(request.getParameter("bbsID"));
+        
+        TestVo testVo = testService.selectDetail(bbsID);
+        model.addAttribute("update", testVo);
+		
+		return "test/update";
+	}
     
     // 게시글 수정 완료
     @RequestMapping(value="/updateTest.do")

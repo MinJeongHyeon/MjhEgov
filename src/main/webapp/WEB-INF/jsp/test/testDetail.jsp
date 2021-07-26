@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- 코어 라이브러리 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,63 +24,61 @@ a, a:hover {
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
-    <br />
-    <h1 class="text-center">게시글 보기</h1>
+	<jsp:include page="top.jsp" flush="false"/>
     <br />
     <br />
     <div class="container">
     <div class="row">
-        <form action="updateTest.do" id="viewForm" method="post"
+        <form action="update.do" id="viewForm" method="post"
             encType="multiplart/form-data">
             <table class="table table-striped"
 			style="text-align: center; border: 1px solid #dddddd">
                 <tbody>
+                	<tr>
+                        <td colspan="2" style="text-align: right;">
+                            <button id="btn_previous" type="button" class="btn btn-default">목록</button>
+                            <c:if test="${vo.userID eq user.userID}">
+                            <button id="btn_modify" type="button" class="btn btn-default">수정</button>
+                            <button id="btn_delete" type="button" class="btn btn-default">삭제</button>
+                            </c:if>
+                        </td>
+                    </tr>
                     <tr>
                         <th style="width: 20%;">글번호</th>
                         <td colspan="2"><input name="bbsID" type="text" value="${vo.bbsID}"
-                            class="form-control" readonly /></td>
+                            class="form-control" style="background-color: white;" readonly /></td>
                     </tr>
                     <tr>
                         <th style="width: 20%;">제목</th>
                         <td colspan="2"><input type="text" value="${vo.bbsTitle}"
-                            name="bbsTitle" class="form-control" /></td>
+                            name="bbsTitle" class="form-control" style="background-color: white;" readonly /></td>
                     </tr>
                     <tr>
 						<th style="width: 20%;">작성자</th>
 						<td colspan="2"><input type="text" value="${vo.userID}"
-                            name="userID" class="form-control" /></td>
+                            name="userID" class="form-control" style="background-color: white;" readonly /></td>
 					</tr>
 					<tr>
 						<th style="width: 20%;">작성일자</th>
 						<td colspan="2"><input type="text" value="${vo.bbsDate}"
-                            name="bbsDate" class="form-control" /></td>
+                            name="bbsDate" class="form-control" style="background-color: white;" readonly /></td>
 					</tr>
                     <tr>
                         <th style="width: 20%;">내용</th>
-                        <td colspan="2"><textarea name="bbsContent" class="form-control"
-                                style="height: 200px;">${vo.bbsContent}</textarea></td>
+                        <td colspan="2"><textarea name="bbsContent" class="form-control" id="bbsContent"
+                                style="resize: none; background-color: white;" readonly>${vo.bbsContent}</textarea></td>
  
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: right;">
-                            <button id="btn_previous" type="button" class="btn_previous">이전</button>
-                            <button id="btn_modify" type="button" class="btn_register">수정</button>
-                            <button id="btn_delete" type="button" class="btn_delete">삭제</button>
-                        </td>
                     </tr>
                 </tbody>
             </table>
         </form>
         </div>
     </div>
+    <script src="js/bootstrap.js"></script>
 </body>
 <script type="text/javascript">
     $(document).on('click', '#btn_modify', function(e) {
-        if (confirm("정말 수정하시겠습니까 ?") == true) {
             $("#viewForm").submit();
-        } else {
-            return;
-        }
     });
     $(document).on('click', '#btn_delete', function(e) {
         
@@ -96,6 +96,16 @@ a, a:hover {
     $("#btn_previous").click(function previous() {
         $(location).attr('href', 'testList.do');
  
+    });
+    
+    $(document).ready(function() {
+    	var boardTextarea = $("#bbsContent");
+
+    	if(boardTextarea) {
+    		boardTextarea.each(function() {
+    			$(this).height(this.scrollHeight);
+    		});
+    	}
     });
 </script>
 </html>

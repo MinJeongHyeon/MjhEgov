@@ -28,9 +28,9 @@
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-<jsp:include page="top.jsp" flush="false"/>
+<jsp:include page="top.jsp" flush="false"/>\
 <br />
-    <h1 class="text-center">게시글 작성</h1>
+    <h1 class="text-center">게시글 수정</h1>
 <br/>
 <div class="container">
 		<c:if test="${user == null}">
@@ -39,30 +39,26 @@
 				location.href="login.do";
 			</script>		
 		</c:if>
-        <form id="form_test" action="insertTest.do" method="post"
-            encType="multipart/form-data">
+        <form id="form_test" action="updateTest.do" method="post"
+            encType="multiplart/form-data">
+            <input type="hidden" name="bbsID" value="${update.bbsID}">
             <input type="hidden" name="userID" value="${user.userID}">
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <th>제목</th>
                         <td><input type="text" placeholder="제목을 입력하세요."
-                            name="bbsTitle" class="form-control" limitbyte="100"/></td>
+                            name="bbsTitle" class="form-control" limitbyte="100" value="${update.bbsTitle}"/></td>
                     </tr>
                     <tr>
                         <th>내용</th>
                         <td><textarea placeholder="내용을 입력하세요 ." name="bbsContent"
-                                class="form-control" id="bbsContent" style="height: 200px;" limitbyte="2048"></textarea></td>
+                                class="form-control" id="bbsContent" style="height: 200px;" limitbyte="2048">${update.bbsContent}</textarea></td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <button id="btn_register" type="button" class="btn_register">등록</button>
                             <button id="btn_previous" type="button" class="btn_previous">이전</button>
-                    </tr>
-                    <tr>
-                        <td>
-                        	<input type="file" name="file">
-                        </td>
                     </tr>
  
                 </tbody>

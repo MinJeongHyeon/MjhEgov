@@ -1,6 +1,7 @@
 package egovframework.example.test.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,8 @@ import egovframework.example.test.vo.UserVo;
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
 
+	public void insertFile(Map<String, Object> map) throws Exception;
+	
 	public UserVo signIn(UserVo userVo) throws Exception;
 	
 	public int checkID(UserVo userVo) throws Exception;

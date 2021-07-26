@@ -164,9 +164,9 @@ a, a:hover {
 	<br>
 
 </body>
-<script src="../../../js/bootstrap-datepicker.js"></script>
-<script src="../../../js/bootstrap-datepicker.ko.js"></script>
-<script src="../../../js/bootstrap.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/bootstrap-datepicker.ko.js"></script>
+<script src="js/bootstrap.js"></script>
 <script type="text/javascript">
     //이전 버튼 이벤트
     //5개의 인자값을 가지고 이동 testList.do
@@ -214,7 +214,7 @@ a, a:hover {
         }
         
     // 검색
-    $(document).on('click', '#btnSearch', function(e){
+    $(document).on('click', '#btnSearch', function search(e){
         e.preventDefault();
         var url = "/testList.do";
         url += "?searchType=" + $('#searchType').val();
@@ -223,7 +223,20 @@ a, a:hover {
         console.log(url);
  
     });    
+    
+    $("#keyword").keypress(function(e) { 
+        if (e.keyCode == 13){
+        	e.preventDefault();
+            var url = "/testList.do";
+            url += "?searchType=" + $('#searchType').val();
+            url += "&keyword=" + $('#keyword').val();
+            location.href = url;
+            console.log(url);
+        }    
+    });
+
  
+    
     </script>
 
 </html>

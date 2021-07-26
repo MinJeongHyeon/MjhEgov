@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.vo.Search;
@@ -20,7 +21,7 @@ public interface TestService {
 	
 	public List<TestVo> selectTest(Search search) throws Exception;
 
-    public void insertTest(TestVo testVo) throws Exception;
+    public void insertTest(TestVo testVo, MultipartHttpServletRequest mpRequest) throws Exception;
  
     public TestVo selectDetail(int bbsID) throws Exception;
  

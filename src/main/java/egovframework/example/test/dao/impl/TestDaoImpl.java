@@ -1,6 +1,7 @@
 package egovframework.example.test.dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,12 @@ import egovframework.example.test.vo.Search;
  
 @Repository
 public class TestDaoImpl implements TestDao {
+	
+	@Override
+	public void insertFile(Map<String, Object> map) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.insertFile(map);
+	}
  
     @Autowired
     private SqlSession sqlSession;

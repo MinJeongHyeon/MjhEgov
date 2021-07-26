@@ -7,7 +7,10 @@
 <meta name="viewport" content="width=device, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
-<title>JSP 게시판 웹 사이트</title>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+	rel="stylesheet">
+<title>Spring 게시판 웹 사이트</title>
 </head>
 <body>
 	<jsp:include page="top.jsp" flush="false"/>

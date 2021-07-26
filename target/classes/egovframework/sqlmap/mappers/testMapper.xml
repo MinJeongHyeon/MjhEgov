@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="egovframework.example.test.service.TestMapper">
+
+	<!-- 파일 추가 -->
+	<insert id="insertFile" parameterType="hashMap">
+		INSERT INTO MP_FILE(
+			FILE_NO,
+			BBSID,
+			ORG_FILE_NAME,
+			STORED_FILE_NAME,
+			FILE_SIZE
+		)VALUES(
+			SEQ_MP_FILE_NO.NEXTVAL,
+			#{BBSID},
+			#{ORG_FILE_NAME},
+			#{STORED_FILE_NAME},
+			#{FILE_SIZE}
+		)
+    </insert>
  
     <!-- 게시글 목록 조회 -->
     <select id="selectTest" resultType="egovframework.example.test.vo.TestVo">
@@ -16,7 +33,7 @@
         	bbsAvailable = 1
             <if test="keyword != null and keyword !=''">
                 <foreach collection="words" item="word">
-					AND ${searchType} LIKE &#39;%${word}%&#39;
+					AND LOWER(${searchType}) LIKE LOWER(&#39;%${word}%&#39;)
 				</foreach>
             </if>
         </where>
@@ -44,16 +61,20 @@
         WHERE bbsID = #{bbsID}
     </select>
     
-    <!-- 게시글 삽입 -->
-    <insert id="insertTest" parameterType="egovframework.example.test.vo.TestVo">
-        INSERT INTO BBS(BBSID, BBSTITLE, USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE) 
-        VALUES (#{bbsID}, #{bbsTitle}, #{userID}, sysdate, #{bbsContent}, #{bbsAvailable})
+    <!-- 게시글 작성 -->
+    <insert id="insertTest" parameterType="egovframework.example.test.vo.TestVo"
+    useGeneratedKeys="true" keyProperty="bbsID">
+	    <selectKey keyProperty="bbsID" resultType="int" order="BEFORE">
+	    	SELECT BBS_SEQ.NEXTVAL FROM DUAL
+	    </selectKey>
+	     INSERT INTO BBS(BBSID, BBSTITLE, USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE) 
+        VALUES (#{bbsID}, #{bbsTitle}, #{userID}, SYSDATE, #{bbsContent}, 1)
     </insert>
     
     <!-- 게시글 수정 -->
     <update id="updateTest" parameterType="egovframework.example.test.vo.TestVo">
     	UPDATE BBS SET 
-        BBSTITLE = #{bbsTitle}, BBSCONTENT = #{bbsCotent} 
+        BBSTITLE = #{bbsTitle}, BBSCONTENT = #{bbsContent} 
         WHERE BBSID = #{bbsID}
     </update>
     
@@ -67,13 +88,13 @@
     <!-- 회원 가입 -->
     <insert id="register" parameterType="egovframework.example.test.vo.UserVo">
         INSERT INTO USERS(USERID, USERPASSWORD, USERNAME, USERGENDER, USEREMAIL) 
-        VALUES (#{userID}, #{userPassword}, #{userName}, #{userGender}, #{userEmail})
+        VALUES (#{userID, jdbcType=VARCHAR}, #{userPassword, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{userGender, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR})
     </insert>
     
     <!-- 아이디 중복 체크 -->
     <select id="checkID" resultType="int">
     	SELECT COUNT(*) FROM USERS
-    	WHERE USERID = #{userID}
+    	WHERE USERID = #{userID, jdbcType=VARCHAR}
     </select>
     
     <!-- 로그인 -->
