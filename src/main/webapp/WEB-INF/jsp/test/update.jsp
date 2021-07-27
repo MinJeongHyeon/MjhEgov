@@ -40,11 +40,14 @@
 			</script>		
 		</c:if>
         <form id="form_test" action="updateTest.do" method="post"
-            encType="multiplart/form-data">
+            encType="multipart/form-data">
             <input type="hidden" name="bbsID" value="${update.bbsID}">
             <input type="hidden" name="userID" value="${user.userID}">
+            <input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
+			<input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
+            
             <table class="table table-bordered">
-                <tbody>
+                <tbody id="tbody">
                     <tr>
                         <th>제목</th>
                         <td><input type="text" placeholder="제목을 입력하세요."
@@ -59,24 +62,64 @@
                         <td colspan="2">
                             <button id="btn_register" type="button" class="btn_register">등록</button>
                             <button id="btn_previous" type="button" class="btn_previous">이전</button>
+                            <button type="button" class="fileAdd_btn">파일추가</button>
                     </tr>
- 
+						<c:forEach var="file" items="${file}" varStatus="var">
+							<tr><td colspan="2">
+								<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}" value="${file.FILE_NO }">
+								<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
+								<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
+								<button id="fileDel" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');" type="button">삭제</button><br>
+							</td></tr>
+						</c:forEach>
                 </tbody>
             </table>
         </form>
     </div>
 </body>
 <script type="text/javascript">
-    //글쓰기
-    $(document).on('click', '#btn_register', function(e) {
-        $("#form_test").submit();
-    });
- 
-    //이전 클릭 시 testList로 이동
-    $("#btn_previous").click(function previous() {
-        $(location).attr('href', 'testList.do');
- 
-    });
+
+	$(document).ready(function(){
+		
+		$(document).on("click", "#fileDel", function(){
+			$(this).parent().remove();
+		})
+		
+		fn_addFile();
+		
+		// 이전
+		$("#btn_previous").on('click', function() {
+	        $(location).attr('href', 'testList.do');
 	 
+	    });
+		
+		// 수정
+		$("#btn_register").on('click', function() {
+			$("#form_test").attr("action", "updateTest.do");
+			$("#form_test").attr("method", "post");
+			$("#form_test").submit();
+		});
+	})
+   
+	
+    function fn_addFile(){
+		var fileIndex = 1;
+		$(".fileAdd_btn").on("click", function(){
+			$("#tbody").append("<tr><td colspan='2'><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></td><tr>");
+		});
+		$(document).on("click","#fileDelBtn", function(){
+			$(this).parent().remove();
+			
+		});
+	}
+		var fileNoArry = new Array();
+		var fileNameArry = new Array();
+		function fn_del(value, name){
+			
+			fileNoArry.push(value);
+			fileNameArry.push(name);
+			$("#fileNoDel").attr("value", fileNoArry);
+			$("#fileNameDel").attr("value", fileNameArry);
+		}
 </script>
 </html>

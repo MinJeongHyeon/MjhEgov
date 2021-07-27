@@ -1,6 +1,12 @@
 package egovframework.example.test.controller;
  
+import java.io.File;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +91,6 @@ public class TestController {
         return "redirect:main.do";
     }
 
-    
     // 글목록페이지,페이징,검색
     @RequestMapping(value="/testList.do")
     public String testListDo(Model model
@@ -121,8 +126,30 @@ public class TestController {
         TestVo testVo = testService.selectDetail(bbsID);
         model.addAttribute("vo", testVo);
         
+        List<Map<String, Object>> fileList = testService.selectFileList(bbsID);
+        model.addAttribute("file", fileList);
+        
         return "test/testDetail";
     }
+    
+    // 파일 다운
+    @RequestMapping(value="/fileDown.do")
+	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{
+		Map<String, Object> resultMap = testService.selectFileInfo(map);
+		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+		
+		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\mp\\file\\"+storedFileName));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		
+	}
     
     // 게시글 작성 페이지
     @RequestMapping(value="/testRegister.do")
@@ -145,13 +172,20 @@ public class TestController {
         TestVo testVo = testService.selectDetail(bbsID);
         model.addAttribute("update", testVo);
 		
+        List<Map<String, Object>> fileList = testService.selectFileList(testVo.getBbsID());
+		model.addAttribute("file", fileList);
+		
 		return "test/update";
 	}
     
     // 게시글 수정 완료
-    @RequestMapping(value="/updateTest.do")
-    public String updateTest(@ModelAttribute("testVo") TestVo testVo) throws Exception {
-        testService.updateTest(testVo);
+    @RequestMapping(value="/updateTest.do", method = RequestMethod.POST)
+    public String updateTest(TestVo testVo,
+    		@RequestParam(value="fileNoDel[]") String[] files,
+			@RequestParam(value="fileNameDel[]") String[] fileNames,
+			MultipartHttpServletRequest mpRequest) throws Exception {
+    	
+        testService.updateTest(testVo, files, fileNames, mpRequest);
         return "redirect:testDetail.do?bbsID="+testVo.getBbsID();
     }
     

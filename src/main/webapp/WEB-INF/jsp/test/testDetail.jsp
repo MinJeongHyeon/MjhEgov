@@ -31,6 +31,7 @@ a, a:hover {
     <div class="row">
         <form action="update.do" id="viewForm" method="post"
             encType="multiplart/form-data">
+            <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
             <table class="table table-striped"
 			style="text-align: center; border: 1px solid #dddddd">
                 <tbody>
@@ -68,6 +69,16 @@ a, a:hover {
                         <td colspan="2"><textarea name="bbsContent" class="form-control" id="bbsContent"
                                 style="resize: none; background-color: white;" readonly>${vo.bbsContent}</textarea></td>
  
+                    </tr>
+                    <tr>
+                        <th style="width: 20%;">파일 목록</th>
+                        <td colspan="2">
+                        	<div class="form-group" style="border: 1px solid #dbdbdb;">
+								<c:forEach var="file" items="${file}">
+									<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+								</c:forEach>
+							</div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -107,5 +118,12 @@ a, a:hover {
     		});
     	}
     });
+    
+    // 파일 다운 클릭
+    function fn_fileDown(fileNo){
+			$("#FILE_NO").attr("value", fileNo);
+			$("#viewForm").attr("action", "fileDown.do");
+			$("#viewForm").submit();
+		}
 </script>
 </html>

@@ -20,6 +20,24 @@ import egovframework.example.test.vo.Search;
 public class TestDaoImpl implements TestDao {
 	
 	@Override
+	public void updateFile(Map<String, Object> map) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.updateFile(map);
+	}
+	
+	@Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.selectFileInfo(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectFileList(int bbsID) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.selectFileList(bbsID);
+	}
+	
+	@Override
 	public void insertFile(Map<String, Object> map) throws Exception {
 		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.insertFile(map);

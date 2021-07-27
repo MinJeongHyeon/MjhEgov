@@ -72,9 +72,22 @@ public class TestServiceImpl implements TestService{
     }
  
     @Override
-    public void updateTest(TestVo testVo) throws Exception {
-        testDao.updateTest(testVo);
-    }
+	public void updateTest(TestVo testVo, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
+		
+		testDao.updateTest(testVo);
+		
+		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(testVo, files, fileNames, mpRequest);
+		Map<String, Object> tempMap = null;
+		int size = list.size();
+		for(int i = 0; i<size; i++) {
+			tempMap = list.get(i);
+			if(tempMap.get("IS_NEW").equals("Y")) {
+				testDao.insertFile(tempMap);
+			}else {
+				testDao.updateFile(tempMap);
+			}
+		}
+	}
  
     @Override
     public void deleteTest(int bbsID) throws Exception {
@@ -90,4 +103,13 @@ public class TestServiceImpl implements TestService{
         return testDao.getBoardListCnt(search);
     }
 
+    @Override
+	public List<Map<String, Object>> selectFileList(int bbsID) throws Exception {
+		return testDao.selectFileList(bbsID);
+	}
+    
+    @Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
+		return testDao.selectFileInfo(map);
+	}
 }

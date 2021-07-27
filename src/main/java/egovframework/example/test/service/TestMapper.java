@@ -14,6 +14,12 @@ import egovframework.example.test.vo.UserVo;
 //Mybatis 매핑XML에 기재된 SQL을 호출하기 위한 인터페이스이다.
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
+	
+	public void updateFile(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
+	
+	public List<Map<String, Object>> selectFileList(int bbsID) throws Exception;
 
 	public void insertFile(Map<String, Object> map) throws Exception;
 	

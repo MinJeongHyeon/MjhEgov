@@ -43,7 +43,7 @@
             encType="multipart/form-data">
             <input type="hidden" name="userID" value="${user.userID}">
             <table class="table table-bordered">
-                <tbody>
+                <tbody id="tbody">
                     <tr>
                         <th>제목</th>
                         <td><input type="text" placeholder="제목을 입력하세요."
@@ -56,12 +56,9 @@
                     </tr>
                     <tr>
                         <td colspan="2">
+                        	<button class="fileAdd_btn" type="button">파일추가</button>	
                             <button id="btn_register" type="button" class="btn_register">등록</button>
                             <button id="btn_previous" type="button" class="btn_previous">이전</button>
-                    </tr>
-                    <tr>
-                        <td>
-                        	<input type="file" name="file">
                         </td>
                     </tr>
  
@@ -71,16 +68,32 @@
     </div>
 </body>
 <script type="text/javascript">
-    //글쓰기
-    $(document).on('click', '#btn_register', function(e) {
-        $("#form_test").submit();
-    });
+
+	$(document).ready(function(){
+		$("#btn_register").on("click", function(){
+			$("#form_test").attr("action", "insertTest.do");
+			$("#form_test").attr("method", "post");
+			$("#form_test").submit();
+		});
+		fn_addFile();
+	})
  
     //이전 클릭 시 testList로 이동
     $("#btn_previous").click(function previous() {
         $(location).attr('href', 'testList.do');
  
     });
+    
+    function fn_addFile(){
+		var fileIndex = 1;
+		$(".fileAdd_btn").on("click", function(){
+			$("#tbody").append("<tr><td colspan='2'><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></td></tr>");
+		});
+		$(document).on("click","#fileDelBtn", function(){
+			$(this).parent().remove();
+			
+		});
+	}
 	 
 </script>
 </html>
