@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
@@ -40,5 +41,11 @@ public interface TestMapper {
 	public void deleteTest(int testId) throws Exception;
 
 	public int getBoardListCnt(Search search) throws Exception;
+	
+	public void addSchedule(ScheduleDTO dto) throws Exception;
+	
+	public List<ScheduleDTO> showSchedule(String userID) throws Exception;
+	
+	public void fileUpdate(Map<String, Object> map) throws Exception;
 
 }

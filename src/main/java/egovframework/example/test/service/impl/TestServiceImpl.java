@@ -15,6 +15,7 @@ import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.SHA256;
 import egovframework.example.test.service.TestService;
 import egovframework.example.test.util.FileUtils;
+import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
@@ -112,4 +113,14 @@ public class TestServiceImpl implements TestService{
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
 		return testDao.selectFileInfo(map);
 	}
+    
+    @Override
+    public void addSchedule(ScheduleDTO dto) throws Exception {
+    	testDao.addSchedule(dto);
+    }
+	
+    @Override
+	public List<ScheduleDTO> showSchedule(String userID) throws Exception {
+    	return testDao.showSchedule(userID);
+    }
 }

@@ -11,9 +11,21 @@
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-<style type="text/css">
+<style type='text/css'>
 a, a:hover {
 	color: #000000;
+}
+th {
+	text-align: center;
+}
+textarea, textarea[readonly], input, input[type], .uneditable-input {
+	box-shadow: none;
+	border: 0;
+}
+textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+    border-color: none;
+    box-shadow: none;
+    outline: 0 none;
 }
 </style>
 <!-- Latest compiled and minified JavaScript -->
@@ -30,13 +42,13 @@ a, a:hover {
     <div class="container">
     <div class="row">
         <form action="update.do" id="viewForm" method="post"
-            encType="multiplart/form-data">
+            encType="multipart/form-data">
             <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
             <table class="table table-striped"
 			style="text-align: center; border: 1px solid #dddddd">
                 <tbody>
                 	<tr>
-                        <td colspan="2" style="text-align: right;">
+                        <td colspan="4" style="text-align: right;">
                             <button id="btn_previous" type="button" class="btn btn-default">목록</button>
                             <c:if test="${vo.userID eq user.userID}">
                             <button id="btn_modify" type="button" class="btn btn-default">수정</button>
@@ -45,40 +57,37 @@ a, a:hover {
                         </td>
                     </tr>
                     <tr>
-                        <th style="width: 20%;">글번호</th>
-                        <td colspan="2"><input name="bbsID" type="text" value="${vo.bbsID}"
+                        <th style="width: 15%; vertical-align:middle;">글번호</th>
+                        <td><input name="bbsID" type="text" value="${vo.bbsID}"
                             class="form-control" style="background-color: white;" readonly /></td>
-                    </tr>
-                    <tr>
-                        <th style="width: 20%;">제목</th>
-                        <td colspan="2"><input type="text" value="${vo.bbsTitle}"
-                            name="bbsTitle" class="form-control" style="background-color: white;" readonly /></td>
-                    </tr>
-                    <tr>
-						<th style="width: 20%;">작성자</th>
-						<td colspan="2"><input type="text" value="${vo.userID}"
+                        <th style="width: 15%; vertical-align:middle;">작성자</th>
+						<td><input type="text" value="${vo.userID}"
                             name="userID" class="form-control" style="background-color: white;" readonly /></td>
-					</tr>
-					<tr>
-						<th style="width: 20%;">작성일자</th>
-						<td colspan="2"><input type="text" value="${vo.bbsDate}"
-                            name="bbsDate" class="form-control" style="background-color: white;" readonly /></td>
-					</tr>
-                    <tr>
-                        <th style="width: 20%;">내용</th>
-                        <td colspan="2"><textarea name="bbsContent" class="form-control" id="bbsContent"
-                                style="resize: none; background-color: white;" readonly>${vo.bbsContent}</textarea></td>
- 
                     </tr>
                     <tr>
-                        <th style="width: 20%;">파일 목록</th>
-                        <td colspan="2">
-                        	<div class="form-group" style="border: 1px solid #dbdbdb;">
+                        <th style="width: 15%; vertical-align:middle;">제목</th>
+                        <td><input type="text" value="${vo.bbsTitle}"
+                            name="bbsTitle" class="form-control" style="background-color: #f9f9f9;" readonly /></td>
+                        <th style="width: 15%; vertical-align:middle;">작성일자</th>
+						<td><input type="text" value="${vo.bbsDate}"
+                            name="bbsDate" class="form-control" style="background-color: #f9f9f9;" readonly /></td>
+                    </tr>
+                    <c:if test="${vo.fileFound >= 1}">
+                    <tr>
+                        <th style="width: 15%; vertical-align:middle;">첨부파일</th>
+                        <td colspan="4" style="vertical-align:middle;">
+                        	<div style="border: 1px solid #dbdbdb;">
 								<c:forEach var="file" items="${file}">
 									<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
 								</c:forEach>
 							</div>
                         </td>
+                    </tr>
+                    </c:if>
+                    <tr>
+                        <td colspan="4"><textarea name="bbsContent" class="form-control" id="bbsContent"
+                                style="resize: none; background-color: white; min-height: 200px;" readonly>${vo.bbsContent}</textarea></td>
+ 
                     </tr>
                 </tbody>
             </table>

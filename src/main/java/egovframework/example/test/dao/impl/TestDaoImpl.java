@@ -14,6 +14,7 @@ import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.TestMapper;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
  
 @Repository
@@ -41,6 +42,7 @@ public class TestDaoImpl implements TestDao {
 	public void insertFile(Map<String, Object> map) throws Exception {
 		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.insertFile(map);
+        mapper.fileUpdate(map);
 	}
  
     @Autowired
@@ -97,6 +99,18 @@ public class TestDaoImpl implements TestDao {
     public int getBoardListCnt(Search search) throws Exception {
         TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         return mapper.getBoardListCnt(search);
+    }
+    
+    @Override
+    public void addSchedule(ScheduleDTO dto) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.addSchedule(dto);
+    }
+	
+    @Override
+	public List<ScheduleDTO> showSchedule(String userID) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.showSchedule(userID);
     }
                                        
 }

@@ -6,15 +6,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import egovframework.example.test.vo.TestVo;
 
+
+
 @Component("fileUtils")
 public class FileUtils {
-	private static final String filePath = "C:/mp/file/"; // 파일이 저장될 위치
+	
+	private static final String filePath = "C:/mp/file"; // 파일이 저장될 위치
 	
 	public List<Map<String, Object>> parseInsertFileInfo(TestVo testVo,
 			MultipartHttpServletRequest mpRequest) throws Exception{

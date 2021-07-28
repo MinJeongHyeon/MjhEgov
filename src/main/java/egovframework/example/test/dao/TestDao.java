@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
  
 public interface TestDao {
@@ -38,4 +39,8 @@ public interface TestDao {
     public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
 
     public void updateFile(Map<String, Object> map) throws Exception;
+    
+    public void addSchedule(ScheduleDTO dto) throws Exception;
+	
+	public List<ScheduleDTO> showSchedule(String userID) throws Exception;
 }

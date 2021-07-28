@@ -38,6 +38,7 @@
 						<li><a href="join.do">회원가입</a></li>
 					</c:if>
 					<c:if test="${user != null}">
+						<li><a href="schedule.do">스케줄러</a>
 						<li><a href="logout.do">로그아웃</a></li>
 					</c:if>
 					</ul>

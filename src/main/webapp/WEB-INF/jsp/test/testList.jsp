@@ -95,7 +95,7 @@ a, a:hover {
 					<th style="background-color: #eeeeee; text-align: center; width: 60px;">번호</th>
 					<th style="background-color: #eeeeee; text-align: center; width: 400px">제목</th>
 					<th style="background-color: #eeeeee; text-align: left; width: 100px;">작성자</th>
-					<th style="background-color: #eeeeee; text-align: center; width: 200px;">등록일자</th>
+					<th style="background-color: #eeeeee; text-align: center; width: 200px;">작성일자</th>
 				</tr>
 			</thead>
 
@@ -103,7 +103,14 @@ a, a:hover {
 				<c:forEach items="${list }" var="result">
 					<tr>
 						<td>${result.bbsID}</td>
-						<td style="text-align: left; padding-left:30px;"><a href="testDetail.do?bbsID=${result.bbsID}">${fn:escapeXml(result.bbsTitle)}</a></td>
+						<td style="text-align: left; padding-left:30px;"><a href="testDetail.do?bbsID=${result.bbsID}">${fn:escapeXml(result.bbsTitle)}</a>
+							<c:if test="${result.fileFound>=1}">
+	   							<span style="font-size: 9px; color: blue;">FILE </span>
+							</c:if>
+							<c:if test="${result.bbsDate>=nowday}">
+	   							<span style="font-size: 9px; color: red;">NEW</span>
+							</c:if>
+						</td>
 						<td style="text-align: left;">${result.userID}</td>
 						<td>${result.bbsDate}</td>
 					</tr>

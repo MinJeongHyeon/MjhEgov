@@ -2,6 +2,9 @@ package egovframework.example.test.controller;
  
 import java.io.File;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,12 +28,36 @@ import egovframework.example.test.service.TestService;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.ScheduleDTO;
 
 @Controller
 public class TestController {
     
     @Autowired
     private TestService testService;
+    
+    // 일정 추가
+    @ResponseBody
+    @RequestMapping(value="/addSchedule.do", produces="text/json; charset=utf-8", method = RequestMethod.POST)
+    public String addSchedule(ScheduleDTO dto) throws Exception {
+    	testService.addSchedule(dto);
+    	return "1";
+    }
+    
+    // 일정 추가 팝업
+    @RequestMapping(value="/schedulePopup.do")
+    public String schedulePopup(){
+        return "test/schedulePopup";
+    }
+    
+    // 스케줄러
+    @RequestMapping(value="/schedule.do")
+    public String schedule(Model model, HttpServletRequest req) throws Exception{
+    	HttpSession session = req.getSession();
+    	UserVo userVo = (UserVo) session.getAttribute("user");
+    	model.addAttribute("showSchedule", testService.showSchedule(userVo.getUserID()));
+        return "test/schedule";
+    }
     
     // 메인 페이지
     @RequestMapping(value="/main.do")
@@ -113,6 +141,11 @@ public class TestController {
         model.addAttribute("pagination", search);
         // 게시글 화면 출력
         model.addAttribute("list", testService.selectTest(search));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -1); //7일간 보이도록 하기위해서.
+        String nowday = format.format(cal.getTime());
+        model.addAttribute("nowday",nowday);
         
         return "test/testList";
     }
@@ -128,7 +161,7 @@ public class TestController {
         
         List<Map<String, Object>> fileList = testService.selectFileList(bbsID);
         model.addAttribute("file", fileList);
-        
+       
         return "test/testDetail";
     }
     

@@ -8,7 +8,14 @@ public class TestVo {
     private String bbsDate;
     private String bbsContent;
     private int bbsAvailable;
+    private String fileFound;
     
+	public String getFileFound() {
+		return fileFound;
+	}
+	public void setFileFound(String fileFound) {
+		this.fileFound = fileFound;
+	}
 	public int getBbsID() {
 		return bbsID;
 	}
