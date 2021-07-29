@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.TestMapper;
 import egovframework.example.test.vo.TestVo;
@@ -111,6 +112,18 @@ public class TestDaoImpl implements TestDao {
 	public List<ScheduleDTO> showSchedule(String userID) throws Exception {
     	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         return mapper.showSchedule(userID);
+    }
+    
+    @Override
+    public List<ReplyVO> readReply(int bbsID) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        return mapper.readReply(bbsID);
+    }
+    
+    @Override
+    public void writeReply(ReplyVO vo) throws Exception {	
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.writeReply(vo);
     }
                                        
 }

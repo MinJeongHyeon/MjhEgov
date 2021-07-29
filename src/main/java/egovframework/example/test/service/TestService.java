@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
  
 public interface TestService {
+	
+	public void writeReply(ReplyVO vo) throws Exception;
+	
+	public List<ReplyVO> readReply(int bbsID) throws Exception;
 	
 	public void addSchedule(ScheduleDTO dto) throws Exception;
 	

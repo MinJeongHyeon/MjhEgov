@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- 코어 라이브러리 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -89,9 +90,39 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
                                 style="resize: none; background-color: white; min-height: 200px;" readonly>${vo.bbsContent}</textarea></td>
  
                     </tr>
-                </tbody>
+					</tbody>
             </table>
         </form>
+        <div class="container">
+        	<br>
+	        <div class="row">
+				<c:forEach items="${replyList}" var="replyList">
+					<h4>${replyList.userID}</h4>
+					<h4>${replyList.content}</h4>
+					<p style="color:#808080;">
+						<fmt:formatDate value="${replyList.regdate}" pattern="yy-MM-dd HH:mm" />
+					</p>
+					<hr>
+				</c:forEach>
+	        </div>
+	        <br>
+	        <div class="row" style="padding: 20px; border: 1px solid #808080;">
+		        <form id="replyForm" name="replyForm" method="post">
+					<input type="hidden" id="bbsID" name="bbsID" value="${vo.bbsID}" />
+					<input type="text" id="userID" name="userID" value="${user.userID}" readonly />
+					<br>
+					<div>
+						<input type="text" id="content" name="content" 
+						style="width:100%; height:50px;" placeholder="댓글을 남겨보세요." autocomplete="off"/>
+					</div>
+					<div>
+						<button type="button" id="replyWriteBtn" class="btn btn-primary pull-right">작성</button>
+					</div>
+				</form>
+			</div>
+			<br>
+			<br>
+			<br>
         </div>
     </div>
     <script src="js/bootstrap.js"></script>
@@ -133,6 +164,12 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 			$("#FILE_NO").attr("value", fileNo);
 			$("#viewForm").attr("action", "fileDown.do");
 			$("#viewForm").submit();
-		}
+	}
+    
+    // 댓글 작성
+    $("#replyWriteBtn").on("click", function(){
+    	  $("#replyForm").attr("action", "replyWrite.do");
+    	  $("#replyForm").submit();
+    	});
 </script>
 </html>

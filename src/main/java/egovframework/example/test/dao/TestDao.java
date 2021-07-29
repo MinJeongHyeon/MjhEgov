@@ -9,10 +9,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
  
 public interface TestDao {
+	
+	public void writeReply(ReplyVO vo) throws Exception;
 	
 	public UserVo signIn(UserVo userVo) throws Exception;
 	
@@ -43,4 +46,6 @@ public interface TestDao {
     public void addSchedule(ScheduleDTO dto) throws Exception;
 	
 	public List<ScheduleDTO> showSchedule(String userID) throws Exception;
+	
+	public List<ReplyVO> readReply(int bbsID) throws Exception;
 }

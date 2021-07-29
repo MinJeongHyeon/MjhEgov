@@ -50,12 +50,12 @@ a, a:hover {
 					<!-- 검색 창 -->
 					<th>
 						<div class="input-group">
-							<div class="w300" style="padding-right: 10px">
+							<div class="w300">
 								<input type="text" class="form-control" name="keyword"
 									id="keyword">
 							</div>
 							<div class="input-group-btn">
-								<button class="btn btn-default" name="btnSearch" id="btnSearch">
+								<button class="btn btn-default" name="btnSearch" id="btnSearch" style="height: 34px;">
 									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
@@ -64,9 +64,9 @@ a, a:hover {
 					
 					<!-- n개씩 보기 -->
 					<th>
-						<div class="btn-group">
+						<div class="btn-group" style="margin: 0 0 0 10px;">
 							<a class="btn btn-default dropdown-toggle btn-select" href="#"
-								data-toggle="dropdown">${pagination.listSize}개씩<span
+								data-toggle="dropdown">${pagination.listSize}개씩 <span
 								class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#"

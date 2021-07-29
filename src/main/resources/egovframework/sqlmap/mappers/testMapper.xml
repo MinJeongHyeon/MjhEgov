@@ -3,6 +3,28 @@
  
 <mapper namespace="egovframework.example.test.service.TestMapper">
 	
+	<insert id="writeReply" parameterType = "egovframework.example.test.vo.ReplyVO">
+		INSERT INTO MP_REPLY(
+			bbsID
+			, RNO
+			, CONTENT
+			, userID
+		)
+		VALUES(    #{bbsID}
+			, MP_REPLY_SEQ.NEXTVAL
+			, #{content}
+			, #{userID}	)
+	</insert>
+	
+	<!-- 댓글 조회 -->
+	<select id="readReply" resultType="egovframework.example.test.vo.ReplyVO">
+    	SELECT
+    		  RNO, CONTENT, userID, REGDATE
+    	 FROM MP_REPLY
+    	WHERE bbsID = #{bbsID}
+	</select>
+	
+	<!-- 일정 조회 -->
 	<select id="showSchedule" parameterType = "String" resultType = "egovframework.example.test.vo.ScheduleDTO">
     		SELECT
     			subject,startDate,endDate,memo
@@ -14,12 +36,15 @@
     			num
     		DESC
    	</select>
+   	
+   	<!-- 일정 추가 -->
    	<insert id="addSchedule" parameterType = "egovframework.example.test.vo.ScheduleDTO">
     	INSERT INTO
     		schedule(subject,startDate,endDate,memo,id,num)
     	VALUES
-    		(#{subject},#{startDate},#{endDate},#{memo}, #{id}, SCD_SEQ.NEXTVAL)
+    		(#{subject},to_date(#{startDate}, 'YY.MM.DD HH24:MI'),to_date(#{endDate}, 'YY.MM.DD HH24:MI'),#{memo}, #{id}, SCD_SEQ.NEXTVAL)
    	</insert>
+	
 	<!-- 파일 삭제 -->
 	<update id="updateFile" parameterType="hashMap">
     	UPDATE MP_FILE SET
@@ -61,6 +86,8 @@
 			#{FILE_SIZE}
 		)
     </insert>
+    
+    <!-- 파일 첨부 여부 추가 -->
     <update id="fileUpdate" parameterType="hashMap">
     	UPDATE BBS SET 
         FILEFOUND = 1

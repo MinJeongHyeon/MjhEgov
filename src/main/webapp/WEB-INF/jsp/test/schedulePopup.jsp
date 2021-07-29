@@ -11,12 +11,13 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 	<!-- datepicker -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link href="css/jquery.datetimepicker.css" rel="stylesheet" />	
+	<script src="js/jquery.datetimepicker.full.min.js" type="text/javascript"></script>
 	<!-- custom -->
 	<link href="css/schedule.css" rel="stylesheet" />	
 	<script src="js/schedule.js?v=1" type="text/javascript"></script>
+
+	
 
 </head>
 <body>
@@ -34,13 +35,13 @@
 			<h3 class = "zTree-h3"> 시작 </h3>
 		</div>
 		<div class = "domain">
-			<input class = "date" id = "startDate" type = "text" name = "startDate" id = "startDate">
+			<input class = "date" id = "startDate" type = "text" name = "startDate" id = "startDate" autocomplete="off">
 		</div>
 		<div class = "domain">
 			<h3 class = "zTree-h3"> 종료 </h3>
 		</div>
 		<div class = "domain">
-			<input class = "date" id = "endDate" type = "text" name = "endDate" id = "endDate">
+			<input class = "date" id = "endDate" type = "text" name = "endDate" id = "endDate" autocomplete="off">
 		</div>
 		<div class = "domain">
 			<h3 class = "zTree-h3"> 메모 </h3>
@@ -54,6 +55,16 @@
 	
 	
 </div>
+<script>
+jQuery.datetimepicker.setLocale('kr'); 
+$('#startDate').datetimepicker({
+	format:'y.m.d H:i'
+	
+});
+$('#endDate').datetimepicker({
+	format:'y.m.d H:i'
+});
+</script>
 </body>
 </html>
 </html>

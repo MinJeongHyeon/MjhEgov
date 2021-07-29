@@ -15,6 +15,7 @@ import egovframework.example.test.dao.TestDao;
 import egovframework.example.test.service.SHA256;
 import egovframework.example.test.service.TestService;
 import egovframework.example.test.util.FileUtils;
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
@@ -122,5 +123,15 @@ public class TestServiceImpl implements TestService{
     @Override
 	public List<ScheduleDTO> showSchedule(String userID) throws Exception {
     	return testDao.showSchedule(userID);
+    }
+    
+    @Override
+    public List<ReplyVO> readReply(int bbsID) throws Exception {
+    	return testDao.readReply(bbsID);
+    }
+    
+    @Override
+    public void writeReply(ReplyVO vo) throws Exception {
+    	testDao.writeReply(vo);
     }
 }

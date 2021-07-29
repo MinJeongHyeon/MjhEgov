@@ -28,6 +28,7 @@ import egovframework.example.test.service.TestService;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
 import egovframework.example.test.vo.UserVo;
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.vo.ScheduleDTO;
 
 @Controller
@@ -36,6 +37,13 @@ public class TestController {
     @Autowired
     private TestService testService;
     
+    //댓글 작성
+  	@RequestMapping(value="/replyWrite.do", method = RequestMethod.POST)
+  	public String replyWrite(ReplyVO vo, RedirectAttributes rttr) throws Exception {
+  		testService.writeReply(vo);
+  		return "redirect:/testDetail.do?bbsID="+vo.getBbsID();
+  	}
+  	
     // 일정 추가
     @ResponseBody
     @RequestMapping(value="/addSchedule.do", produces="text/json; charset=utf-8", method = RequestMethod.POST)
@@ -162,6 +170,8 @@ public class TestController {
         List<Map<String, Object>> fileList = testService.selectFileList(bbsID);
         model.addAttribute("file", fileList);
        
+        List<ReplyVO> replyList = testService.readReply(bbsID);
+        model.addAttribute("replyList", replyList);
         return "test/testDetail";
     }
     

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import egovframework.example.test.vo.ReplyVO;
 import egovframework.example.test.vo.ScheduleDTO;
 import egovframework.example.test.vo.Search;
 import egovframework.example.test.vo.TestVo;
@@ -15,6 +16,10 @@ import egovframework.example.test.vo.UserVo;
 //Mybatis 매핑XML에 기재된 SQL을 호출하기 위한 인터페이스이다.
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
+	
+	public void writeReply(ReplyVO vo) throws Exception;
+	
+	public List<ReplyVO> readReply(int bbsID) throws Exception;
 	
 	public void updateFile(Map<String, Object> map) throws Exception;
 	
