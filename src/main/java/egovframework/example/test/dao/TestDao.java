@@ -15,6 +15,10 @@ import egovframework.example.test.vo.Search;
  
 public interface TestDao {
 	
+	public void updateReply(ReplyVO vo) throws Exception;
+	
+	public void deleteReply(ReplyVO vo) throws Exception;
+	
 	public void writeReply(ReplyVO vo) throws Exception;
 	
 	public UserVo signIn(UserVo userVo) throws Exception;

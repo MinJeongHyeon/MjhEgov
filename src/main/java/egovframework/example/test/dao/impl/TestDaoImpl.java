@@ -125,5 +125,17 @@ public class TestDaoImpl implements TestDao {
     	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.writeReply(vo);
     }
+    
+    @Override
+    public void updateReply(ReplyVO vo) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.updateReply(vo);
+    }
+	
+    @Override
+	public void deleteReply(ReplyVO vo) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.deleteReply(vo);
+    }
                                        
 }

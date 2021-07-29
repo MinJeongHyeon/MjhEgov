@@ -3,6 +3,19 @@
  
 <mapper namespace="egovframework.example.test.service.TestMapper">
 	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="egovframework.example.test.vo.ReplyVO">
+		UPDATE MP_REPLY SET CONTENT = #{content}
+		WHERE RNO = #{rno}
+	</update>
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="egovframework.example.test.vo.ReplyVO">
+		DELETE FROM MP_REPLY
+		WHERE RNO = #{rno}
+	</delete>
+	
+	<!-- 댓글 작성 -->
 	<insert id="writeReply" parameterType = "egovframework.example.test.vo.ReplyVO">
 		INSERT INTO MP_REPLY(
 			bbsID

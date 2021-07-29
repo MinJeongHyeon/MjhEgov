@@ -37,9 +37,16 @@ public class TestController {
     @Autowired
     private TestService testService;
     
+    //댓글 수정
+  	@RequestMapping(value="/updateReply.do", method = RequestMethod.POST)
+  	public String updateReply(ReplyVO vo) throws Exception {
+  		testService.updateReply(vo);
+  		return "redirect:/testDetail.do?bbsID="+vo.getBbsID();
+  	}
+  	
     //댓글 작성
   	@RequestMapping(value="/replyWrite.do", method = RequestMethod.POST)
-  	public String replyWrite(ReplyVO vo, RedirectAttributes rttr) throws Exception {
+  	public String replyWrite(ReplyVO vo) throws Exception {
   		testService.writeReply(vo);
   		return "redirect:/testDetail.do?bbsID="+vo.getBbsID();
   	}

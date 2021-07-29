@@ -97,12 +97,22 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
         	<br>
 	        <div class="row">
 				<c:forEach items="${replyList}" var="replyList">
-					<h4>${replyList.userID}</h4>
-					<h4>${replyList.content}</h4>
-					<p style="color:#808080;">
-						<fmt:formatDate value="${replyList.regdate}" pattern="yy-MM-dd HH:mm" />
-					</p>
-					<hr>
+					<div id= "${replyList.rno}">
+						<h5>${replyList.userID}</h5>
+						<h5>${replyList.content}</h5>
+						<h6 style="color:#808080;">
+							<fmt:formatDate value="${replyList.regdate}" pattern="yy-MM-dd HH:mm" />
+						</h6>
+						<c:if test="${user.userID eq replyList.userID}">
+							<div>
+							  <button type="button" onclick="javascript:updateForm(${replyList.rno}, '${replyList.content}', ${vo.bbsID});"
+							  class="btn btn-default">수정</button>
+							  <button type="button" 
+							  class="btn btn-default">삭제</button>
+							</div>
+						</c:if>
+						<hr>
+					</div>
 				</c:forEach>
 	        </div>
 	        <br>
@@ -116,7 +126,7 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 						style="width:100%; height:50px;" placeholder="댓글을 남겨보세요." autocomplete="off"/>
 					</div>
 					<div>
-						<button type="button" id="replyWriteBtn" class="btn btn-primary pull-right">작성</button>
+						<button type="button" id="replyWriteBtn" class="btn btn-default pull-right">작성</button>
 					</div>
 				</form>
 			</div>
@@ -171,5 +181,36 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
     	  $("#replyForm").attr("action", "replyWrite.do");
     	  $("#replyForm").submit();
     	});
+    
+  //댓글 수정 View
+	function updateForm(rno, content, bbsID){
+		var htmls = "";
+		htmls += '<div class="row" style="padding: 20px; border: 1px solid #808080;">';
+		htmls += '<form id="replyUpdateForm" name="replyUpdateForm" method="post">';
+		htmls += '<input type="hidden" id="updateRno" name="rno" value="' + rno + '" />';
+		htmls += '<input type="hidden" id="updateBbsID" name="bbsID" value="' + bbsID + '" />';
+		htmls += '<input type="text" id="updateUserID" name="userID" value="${user.userID}" readonly />';
+		htmls += '<br>';
+		htmls += '<div>';
+		htmls += '<input type="text" id="updateContent" name="content"' ;
+		htmls += 'style="width:100%; height:50px;" placeholder="댓글을 남겨보세요." autocomplete="off"/>';
+	    htmls += '</div>';
+		htmls += '<div>';
+		htmls += '<button type="button" onclick="updateReply()" class="btn btn-default">수정</button>';
+		htmls += '<button type="button" id="replyCancel" class="btn btn-default">취소</button>';
+		htmls += '</div>';
+		htmls += '</form>';
+		htmls += '</div>';
+
+		$('#' + rno).replaceWith(htmls);
+		$('#updateContent').focus();
+		$('#updateContent').val(content);
+	};
+		
+	 // 댓글 수정
+    function updateReply(){
+    	  $("#replyUpdateForm").attr("action", "updateReply.do");
+    	  $("#replyUpdateForm").submit();
+    	};
 </script>
 </html>

@@ -134,4 +134,14 @@ public class TestServiceImpl implements TestService{
     public void writeReply(ReplyVO vo) throws Exception {
     	testDao.writeReply(vo);
     }
+    
+    @Override
+    public void updateReply(ReplyVO vo) throws Exception {
+    	testDao.updateReply(vo);
+    }
+	
+    @Override
+	public void deleteReply(ReplyVO vo) throws Exception {
+		testDao.deleteReply(vo);
+	}
 }
