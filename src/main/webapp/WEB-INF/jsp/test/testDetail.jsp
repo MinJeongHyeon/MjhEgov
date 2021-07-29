@@ -116,7 +116,8 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 				</c:forEach>
 	        </div>
 	        <br>
-	        <div class="row" style="padding: 20px; border: 1px solid #808080;">
+	        <c:if test="${user != null}">
+	        <div class="row" style="padding: 20px; border: 1px solid #dddddd;">
 		        <form id="replyForm" name="replyForm" method="post">
 					<input type="hidden" id="bbsID" name="bbsID" value="${vo.bbsID}" />
 					<input type="text" id="userID" name="userID" value="${user.userID}" readonly />
@@ -130,6 +131,7 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 					</div>
 				</form>
 			</div>
+			</c:if>
 			<br>
 			<br>
 			<br>

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -90,7 +91,9 @@ public class TestController {
     
     // 로그인 페이지
     @RequestMapping(value="/login.do")
-    public String login(){
+    public String login(HttpServletRequest req){
+    	String referrer = req.getHeader("Referer");
+    	req.getSession().setAttribute("prevPage", referrer);
         return "test/login";
     }
     
@@ -109,7 +112,8 @@ public class TestController {
 			session.setAttribute("user", signIn);
 		}
 		
-		return "redirect:main.do";
+		String referer = (String) req.getSession().getAttribute("prevPage");
+		return "redirect:" + referer;
 	}
     
     // 로그아웃
@@ -123,15 +127,18 @@ public class TestController {
     
     // 회원가입 페이지
     @RequestMapping(value="/join.do")
-    public String join(){
+    public String join(HttpServletRequest req){
+    	String referrer = req.getHeader("Referer");
+    	req.getSession().setAttribute("prevPage", referrer);
         return "test/join";
     }
     
     // 회원가입 하기
     @RequestMapping(value="/register.do")
-    public String register(@ModelAttribute("userVo") UserVo userVo) throws Exception {
+    public String register(@ModelAttribute("userVo") UserVo userVo, HttpServletRequest req) throws Exception {
         testService.register(userVo);
-        return "redirect:main.do";
+        String referer = (String) req.getSession().getAttribute("prevPage");
+		return "redirect:" + referer;
     }
 
     // 글목록페이지,페이징,검색
