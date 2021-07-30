@@ -133,9 +133,15 @@ public class TestDaoImpl implements TestDao {
     }
 	
     @Override
-	public void deleteReply(ReplyVO vo) throws Exception {
+	public void deleteReply(int rno) throws Exception {
     	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
-        mapper.deleteReply(vo);
+        mapper.deleteReply(rno);
+    }
+    
+    @Override
+    public void updateReplyCount(int bbsID) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+        mapper.updateReplyCount(bbsID);
     }
                                        
 }

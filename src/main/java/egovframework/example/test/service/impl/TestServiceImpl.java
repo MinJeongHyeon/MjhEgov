@@ -141,7 +141,12 @@ public class TestServiceImpl implements TestService{
     }
 	
     @Override
-	public void deleteReply(ReplyVO vo) throws Exception {
-		testDao.deleteReply(vo);
+	public void deleteReply(int rno) throws Exception {
+		testDao.deleteReply(rno);
 	}
+    
+    @Override
+    public void updateReplyCount(int bbsID) throws Exception {
+    	testDao.updateReplyCount(bbsID);
+    }
 }

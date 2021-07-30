@@ -17,7 +17,7 @@ public interface TestDao {
 	
 	public void updateReply(ReplyVO vo) throws Exception;
 	
-	public void deleteReply(ReplyVO vo) throws Exception;
+	public void deleteReply(int rno) throws Exception;
 	
 	public void writeReply(ReplyVO vo) throws Exception;
 	
@@ -52,4 +52,6 @@ public interface TestDao {
 	public List<ScheduleDTO> showSchedule(String userID) throws Exception;
 	
 	public List<ReplyVO> readReply(int bbsID) throws Exception;
+	
+	public void updateReplyCount(int bbsID) throws Exception;
 }

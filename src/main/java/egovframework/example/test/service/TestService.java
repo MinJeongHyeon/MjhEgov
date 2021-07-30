@@ -19,7 +19,7 @@ public interface TestService {
 	
 	public void updateReply(ReplyVO vo) throws Exception;
 	
-	public void deleteReply(ReplyVO vo) throws Exception;
+	public void deleteReply(int rno) throws Exception;
 	
 	public void writeReply(ReplyVO vo) throws Exception;
 	
@@ -50,4 +50,6 @@ public interface TestService {
     public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
     
     public List<Map<String, Object>> selectFileList(int bbsID) throws Exception;
+    
+    public void updateReplyCount(int bbsID) throws Exception;
 }

@@ -104,6 +104,9 @@ a, a:hover {
 					<tr>
 						<td>${result.bbsID}</td>
 						<td style="text-align: left; padding-left:30px;"><a href="testDetail.do?bbsID=${result.bbsID}">${fn:escapeXml(result.bbsTitle)}</a>
+							<c:if test="${result.replyFound>=1}">
+								<span style="font-size: 12px; color:red;">&#91;${result.replyFound}&#93;</span>
+							</c:if>
 							<c:if test="${result.fileFound>=1}">
 	   							<span style="font-size: 9px; color: blue;">FILE </span>
 							</c:if>

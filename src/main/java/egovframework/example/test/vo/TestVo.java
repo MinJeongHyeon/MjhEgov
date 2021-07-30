@@ -9,7 +9,14 @@ public class TestVo {
     private String bbsContent;
     private int bbsAvailable;
     private String fileFound;
+    private int replyFound;
     
+	public int getReplyFound() {
+		return replyFound;
+	}
+	public void setReplyFound(int replyFound) {
+		this.replyFound = replyFound;
+	}
 	public String getFileFound() {
 		return fileFound;
 	}

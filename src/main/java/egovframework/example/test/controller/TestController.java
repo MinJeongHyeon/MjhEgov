@@ -38,17 +38,29 @@ public class TestController {
     @Autowired
     private TestService testService;
     
-    //댓글 수정
+    // 댓글 삭제 완료
+    @RequestMapping(value="/deleteReply.do")
+    public String deleteReply(HttpServletRequest request) throws Exception {
+        int rno = Integer.parseInt(request.getParameter("rno"));
+        int bbsID = Integer.parseInt(request.getParameter("bbsID"));
+        testService.deleteReply(rno);
+  		testService.updateReplyCount(bbsID);
+        String referer = request.getHeader("Referer");
+		return "redirect:" + referer;
+    }
+    
+    // 댓글 수정
   	@RequestMapping(value="/updateReply.do", method = RequestMethod.POST)
   	public String updateReply(ReplyVO vo) throws Exception {
   		testService.updateReply(vo);
   		return "redirect:/testDetail.do?bbsID="+vo.getBbsID();
   	}
   	
-    //댓글 작성
+    // 댓글 작성
   	@RequestMapping(value="/replyWrite.do", method = RequestMethod.POST)
   	public String replyWrite(ReplyVO vo) throws Exception {
   		testService.writeReply(vo);
+  		testService.updateReplyCount(vo.getBbsID());
   		return "redirect:/testDetail.do?bbsID="+vo.getBbsID();
   	}
   	
@@ -150,6 +162,7 @@ public class TestController {
             ,@RequestParam(required=false)String keyword
             ,@ModelAttribute("search")Search search) throws Exception{
         
+    	
         // 검색
         model.addAttribute("search", search);
         search.setSearchType(searchType);

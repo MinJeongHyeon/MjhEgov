@@ -3,6 +3,13 @@
  
 <mapper namespace="egovframework.example.test.service.TestMapper">
 	
+	<!-- 댓글 개수 업데이트 -->
+	<update id="updateReplyCount" parameterType="int">
+	update bbs b
+	set b.replyfound = (select count(*) from mp_reply where bbsID= #{bbsID})
+	where b.bbsID = #{bbsID}
+	</update>
+
 	<!-- 댓글 수정 -->
 	<update id="updateReply" parameterType="egovframework.example.test.vo.ReplyVO">
 		UPDATE MP_REPLY SET CONTENT = #{content}
@@ -10,7 +17,7 @@
 	</update>
 
 	<!-- 댓글 삭제 -->
-	<delete id="deleteReply" parameterType="egovframework.example.test.vo.ReplyVO">
+	<delete id="deleteReply" parameterType="int">
 		DELETE FROM MP_REPLY
 		WHERE RNO = #{rno}
 	</delete>
@@ -113,7 +120,7 @@
         SELECT * FROM 
         (SELECT bbsID, bbsTitle, 
         userID, bbsDate, 
-        bbsContent, bbsAvailable, fileFound,
+        bbsContent, bbsAvailable, fileFound, replyFound,
         ROW_NUMBER() OVER(ORDER BY bbsId DESC) 
         rn FROM BBS
         <where>
@@ -154,8 +161,8 @@
 	    <selectKey keyProperty="bbsID" resultType="int" order="BEFORE">
 	    	SELECT BBS_SEQ.NEXTVAL FROM DUAL
 	    </selectKey>
-	     INSERT INTO BBS(BBSID, BBSTITLE, USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE, FILEFOUND) 
-        VALUES (#{bbsID}, #{bbsTitle}, #{userID}, SYSDATE, #{bbsContent}, 1, 0)
+	     INSERT INTO BBS(BBSID, BBSTITLE, USERID, BBSDATE, BBSCONTENT, BBSAVAILABLE, FILEFOUND, REPLYFOUND) 
+        VALUES (#{bbsID}, #{bbsTitle}, #{userID}, SYSDATE, #{bbsContent}, 1, 0, 0)
     </insert>
     
     <!-- 게시글 수정 -->

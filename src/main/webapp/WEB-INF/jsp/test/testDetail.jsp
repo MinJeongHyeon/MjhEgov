@@ -107,7 +107,7 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 							<div>
 							  <button type="button" onclick="javascript:updateForm(${replyList.rno}, '${replyList.content}', ${vo.bbsID});"
 							  class="btn btn-default">수정</button>
-							  <button type="button" 
+							  <button type="button" onclick="javascript:deleteReply(${replyList.rno}, ${vo.bbsID});"
 							  class="btn btn-default">삭제</button>
 							</div>
 						</c:if>
@@ -136,6 +136,7 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 			<br>
 			<br>
         </div>
+    </div>
     </div>
     <script src="js/bootstrap.js"></script>
 </body>
@@ -199,7 +200,7 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
 	    htmls += '</div>';
 		htmls += '<div>';
 		htmls += '<button type="button" onclick="updateReply()" class="btn btn-default">수정</button>';
-		htmls += '<button type="button" id="replyCancel" class="btn btn-default">취소</button>';
+		htmls += '<button type="button" onclick="cancleUpdate()"  class="btn btn-default">취소</button>';
 		htmls += '</div>';
 		htmls += '</form>';
 		htmls += '</div>';
@@ -214,5 +215,24 @@ textarea:focus, textarea[readonly]:focus, input:focus, input[type]:focus, .unedi
     	  $("#replyUpdateForm").attr("action", "updateReply.do");
     	  $("#replyUpdateForm").submit();
     	};
+    	
+	// 댓글 삭제
+   	function deleteReply(rno,bbsID){
+        
+        if (confirm("정말 삭제하시겠습니까 ?") == true) {
+            $("#viewForm").attr("action", "deleteReply.do?rno="+rno+"&bbsID="+bbsID);
+            $("#viewForm").submit();
+        } else {
+            return;
+        }
+    };
+    // 댓글 수정 취소
+    function cancleUpdate(){
+    	if (confirm("수정을 취소하시겠습니까 ?") == true) {
+    		location.reload();
+        } else {
+            return;
+        }
+    }
 </script>
 </html>
