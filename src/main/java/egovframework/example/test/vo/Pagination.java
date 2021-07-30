@@ -25,7 +25,17 @@ private int listSize = 10; //초기값으로 한 페이지당 보여질 게시�
     
     private boolean next; //다음페이지
     
-    public boolean isPrev() {
+    private int rangeCnt;
+    
+    public int getRangeCnt() {
+		return rangeCnt;
+	}
+
+	public void setRangeCnt(int rangeCnt) {
+		this.rangeCnt = rangeCnt;
+	}
+
+	public boolean isPrev() {
         return prev;
     }
     
@@ -44,7 +54,10 @@ private int listSize = 10; //초기값으로 한 페이지당 보여질 게시�
         this.listCnt = listCnt;
         
         //전체 페이지 개수
-        this.pageCnt = (int)Math.ceil(listCnt/listSize);
+        this.pageCnt = (int)Math.ceil((double)listCnt/listSize);
+        
+        //전체 범위 개수
+        this.rangeCnt = (int)Math.ceil((double)pageCnt/rangeSize);
         
         //시작페이지
         this.startPage = (range - 1) * rangeSize + 1;

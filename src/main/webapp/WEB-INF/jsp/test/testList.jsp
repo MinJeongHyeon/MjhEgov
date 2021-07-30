@@ -27,16 +27,18 @@ a, a:hover {
 <body>
 	<!-- 네비게이션 바 -->
 	<jsp:include page="top.jsp" flush="false" />
-	<br />
-	<br />
 	<div class="container">
-	
+		<h1>게시판</h1>
+						
 		<!-- 검색 DIV 시작 -->
 		<div class="navbar-form pull-right">
 			<table>
 				<tr>
+					<th>
+						
+					</th>
 					<!-- 검색 타입  -->
-					<th> 
+					<td> 
 						<div class="w100" style="padding-right: 10px">
 							<select class="form-control form-control-sm" name="searchType"
 								id="searchType">
@@ -45,14 +47,14 @@ a, a:hover {
 								<option value="userID">작성자</option>
 							</select>
 						</div>
-					</th>
+					</td>
 					
 					<!-- 검색 창 -->
-					<th>
+					<td>
 						<div class="input-group">
 							<div class="w300">
 								<input type="text" class="form-control" name="keyword"
-									id="keyword">
+									id="keyword" value="${search.keyword}">
 							</div>
 							<div class="input-group-btn">
 								<button class="btn btn-default" name="btnSearch" id="btnSearch" style="height: 34px;">
@@ -60,10 +62,10 @@ a, a:hover {
 								</button>
 							</div>
 						</div>
-					</th>
+					</td>
 					
 					<!-- n개씩 보기 -->
-					<th>
+					<td>
 						<div class="btn-group" style="margin: 0 0 0 10px;">
 							<a class="btn btn-default dropdown-toggle btn-select" href="#"
 								data-toggle="dropdown">${pagination.listSize}개씩 <span
@@ -80,7 +82,7 @@ a, a:hover {
                      ,'${search.searchType}', '${search.keyword}')">20개씩</a></li>
 							</ul>
 						</div>
-					</th>
+					</td>
 					
 				</tr>
 			</table>
@@ -155,7 +157,14 @@ a, a:hover {
 				<c:if test="${pagination.next}">
 					<li class="page-item"><a class="page-link" href="#"
 						onClick="fn_next('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${pagination.listSize}'
-                    ,'${search.searchType}', '${search.keyword}')">다음</a></li>
+                    ,'${search.searchType}', '${search.keyword}')">&gt;</a></li>
+				</c:if>
+				
+				<!-- 끝 버튼 -->
+				<c:if test="${pagination.range ne pagination.rangeCnt}">
+					<li class="page-item"><a class="page-link" href="#"
+						onClick="fn_pagination('${pagination.pageCnt}', '${pagination.rangeCnt}', '${pagination.rangeSize}', '${pagination.listSize}'
+                    ,'${search.searchType}', '${search.keyword}')">&gt;&gt;</a></li>
 				</c:if>
 			</ul>
 		</div>

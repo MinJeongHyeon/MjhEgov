@@ -12,8 +12,7 @@
 	rel="stylesheet">
 <title>Spring 게시판 웹 사이트</title>
   <style>
-    .row { margin-bottom: 10px; }
-    [class|="col"] {
+    [class|="col-sm-12"] {
       background: #fafafa;
       border: 1px solid #ededed;
       height: 150px;
@@ -21,6 +20,7 @@
       color: black;
       font-weight: 700;
       padding-left: 20px;
+      margin-bottom: 30px;
     }
   </style>
 </head>
@@ -28,18 +28,46 @@
 	<jsp:include page="top.jsp" flush="false"/>
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-6">
-			<h3>회원 정보 수정</h3>
-			<br>
-			<br>
-			<button type="button" class="btn btn-default pull-right"
-			onclick="javascript:location.href='userUpdatePage.do'">수정</button>
+			<div class="col-sm-6">
+			<h1>마이페이지</h1>
 			</div>
-			<div class="col-xs-6"><br></div>
 		</div>
 		<div class="row">
-			<div class="col-xs-6"><br></div>
-			<div class="col-xs-6"><br></div>
+			<div class="col-sm-6">
+				<div class="col-sm-12">
+					<h3>회원 정보 수정</h3>
+					<br>
+					<br>
+					<button type="button" class="btn btn-default pull-right"
+					onclick="javascript:location.href='userUpdatePage.do'">수정</button>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="col-sm-12">
+					<h3>미구현</h3>
+					<br>
+					<br>
+					<button type="button" class="btn btn-default pull-right">미구현</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="col-sm-12">
+					<h3>미구현</h3>
+					<br>
+					<br>
+					<button type="button" class="btn btn-default pull-right">미구현</button>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="col-sm-12">
+					<h3>미구현</h3>
+					<br>
+					<br>
+					<button type="button" class="btn btn-default pull-right">미구현</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
