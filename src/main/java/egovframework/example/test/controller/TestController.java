@@ -38,6 +38,41 @@ public class TestController {
     @Autowired
     private TestService testService;
     
+    // 회원 탈퇴
+    @RequestMapping(value="/deleteUser.do", method = RequestMethod.POST)
+  	public String deleteUser(HttpServletRequest request) throws Exception {
+    	String userID = request.getParameter("userID");
+  		testService.deleteUser(userID);
+  		return "redirect:/logout.do";
+  	}
+    
+    // 회원 정보 수정
+    @RequestMapping(value="/updateUser.do", method = RequestMethod.POST)
+  	public String updateUser(UserVo vo) throws Exception {
+  		testService.updateUser(vo);
+  		return "redirect:/userUpdatePage.do";
+  	}
+    
+    // 회원 정보 수정 페이지
+    @RequestMapping(value="/userUpdatePage.do")
+    public String userUpdatePage(Model model, HttpServletRequest req) throws Exception{
+    	UserVo userVo = (UserVo) req.getSession().getAttribute("user");
+    	model.addAttribute("user", testService.selectUser(userVo.getUserID()));
+        return "test/userUpdatePage";
+    }
+    
+    // 마이 페이지
+    @RequestMapping(value="/myPage.do")
+    public String myPage(){
+        return "test/myPage";
+    }
+    
+    // 회원탈퇴 페이지
+    @RequestMapping(value="/withdrawPage.do")
+    public String withdrawPage(){
+        return "test/withdrawPage";
+    }
+    
     // 댓글 삭제 완료
     @RequestMapping(value="/deleteReply.do")
     public String deleteReply(HttpServletRequest request) throws Exception {

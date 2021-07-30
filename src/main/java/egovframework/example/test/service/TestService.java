@@ -17,6 +17,12 @@ import egovframework.example.test.vo.UserVo;
  
 public interface TestService {
 	
+	public void deleteUser(String userID) throws Exception;
+	
+	public void updateUser(UserVo vo) throws Exception;
+	
+	public UserVo selectUser(String userID) throws Exception;
+	
 	public void updateReply(ReplyVO vo) throws Exception;
 	
 	public void deleteReply(int rno) throws Exception;

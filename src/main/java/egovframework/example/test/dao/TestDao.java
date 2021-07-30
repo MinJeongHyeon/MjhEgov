@@ -15,6 +15,10 @@ import egovframework.example.test.vo.Search;
  
 public interface TestDao {
 	
+	public void deleteUser(String userID) throws Exception;
+	
+	public void updateUser(UserVo vo) throws Exception;
+	
 	public void updateReply(ReplyVO vo) throws Exception;
 	
 	public void deleteReply(int rno) throws Exception;
@@ -54,4 +58,6 @@ public interface TestDao {
 	public List<ReplyVO> readReply(int bbsID) throws Exception;
 	
 	public void updateReplyCount(int bbsID) throws Exception;
+	
+	public UserVo selectUser(String userID) throws Exception;
 }

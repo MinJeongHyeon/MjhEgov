@@ -3,6 +3,26 @@
  
 <mapper namespace="egovframework.example.test.service.TestMapper">
 	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM USERS
+		WHERE userID = #{userID}
+	</delete>
+	
+	<!-- 회원 정보 수정-->
+	<update id="updateUser" parameterType="egovframework.example.test.vo.UserVo">
+	update users set 
+		userName = #{userName},
+		userPassword = #{userPassword},
+		userEmail = #{userEmail}
+	where userID = #{userID}
+	</update>
+	
+	<!-- 유저 검색 -->
+	<select id="selectUser" parameterType="String" resultType="egovframework.example.test.vo.UserVo">
+	select * from users where userID = #{userID}
+	</select>
+	
 	<!-- 댓글 개수 업데이트 -->
 	<update id="updateReplyCount" parameterType="int">
 	update bbs b

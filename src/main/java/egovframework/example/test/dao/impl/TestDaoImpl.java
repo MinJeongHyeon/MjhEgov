@@ -22,6 +22,16 @@ import egovframework.example.test.vo.Search;
 public class TestDaoImpl implements TestDao {
 	
 	@Override
+	public void deleteUser(String userID) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+		mapper.deleteUser(userID);
+	}
+	@Override
+	public void updateUser(UserVo vo) throws Exception {
+		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+		mapper.updateUser(vo);
+	}
+	@Override
 	public void updateFile(Map<String, Object> map) throws Exception {
 		TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.updateFile(map);
@@ -142,6 +152,12 @@ public class TestDaoImpl implements TestDao {
     public void updateReplyCount(int bbsID) throws Exception {
     	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
         mapper.updateReplyCount(bbsID);
+    }
+    
+    @Override
+    public UserVo selectUser(String userID) throws Exception {
+    	TestMapper mapper = sqlSession.getMapper(TestMapper.class);
+    	return mapper.selectUser(userID);
     }
                                        
 }

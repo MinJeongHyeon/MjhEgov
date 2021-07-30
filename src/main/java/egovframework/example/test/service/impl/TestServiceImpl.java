@@ -31,6 +31,15 @@ public class TestServiceImpl implements TestService{
     private TestDao testDao;
     
     @Override
+    public void deleteUser(String userID) throws Exception {
+    	testDao.deleteUser(userID);
+    }
+    @Override
+    public void updateUser(UserVo vo) throws Exception {
+    	testDao.updateUser(vo);
+    }
+    
+    @Override
     public UserVo signIn(UserVo userVo) throws Exception {
     	SHA256 sha256 = new SHA256();
 		userVo.setUserPassword(sha256.encrypt(userVo.getUserPassword()));
@@ -148,5 +157,10 @@ public class TestServiceImpl implements TestService{
     @Override
     public void updateReplyCount(int bbsID) throws Exception {
     	testDao.updateReplyCount(bbsID);
+    }
+    
+    @Override
+    public UserVo selectUser(String userID) throws Exception {
+    	return testDao.selectUser(userID);
     }
 }

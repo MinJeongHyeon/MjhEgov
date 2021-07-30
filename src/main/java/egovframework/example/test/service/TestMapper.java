@@ -17,6 +17,12 @@ import egovframework.example.test.vo.UserVo;
 //SQL id는 인터페이스에 정의된 메서드명과 동일하게 작성한다
 public interface TestMapper {
 	
+	public void deleteUser(String userID) throws Exception;
+	
+	public void updateUser(UserVo vo) throws Exception;
+	
+	public UserVo selectUser(String userID) throws Exception;
+	
 	public void updateReplyCount(int bbsID) throws Exception;
 	
 	public void updateReply(ReplyVO vo) throws Exception;
